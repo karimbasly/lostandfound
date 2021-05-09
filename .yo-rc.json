@@ -41,6 +41,8 @@
     "jwtSecretKey": "NDAzYWZhZGRjNTAwMDNkZGUyNmYyN2UxZTgxMWRhYmMyODQzMGMwZDBiMTZkMjE3Y2QwYjI4ZTc0YTg5MTJiMmJkNDBhZWIzNWI5MTY3OGY5OWE0YmQ1OGNkNWJhNGFiZWU0ZjI3YjE2MTEwZTRiMDRjY2YwM2FjYTBmMDAyYmI=",
     "clientPackageManager": "npm",
     "clientThemeVariant": "",
-    "languages": ["en", "fr"]
+    "languages": ["en", "fr"],
+    "entities": ["Annonce", "Image", "Categorie", "Conversation", "Message", "Commentaire"],
+    "lastLiquibaseTimestamp": 1620310596000
   }
 }

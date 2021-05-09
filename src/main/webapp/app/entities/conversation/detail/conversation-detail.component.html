@@ -1,0 +1,57 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="conversation">
+      <h2 data-cy="conversationDetailsHeading"><span>Conversation</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ conversation.id }}</span>
+        </dd>
+        <dt><span>Title</span></dt>
+        <dd>
+          <span>{{ conversation.title }}</span>
+        </dd>
+        <dt><span>Creation Date</span></dt>
+        <dd>
+          <span>{{ conversation.creationDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Logo</span></dt>
+        <dd>
+          <div *ngIf="conversation.logo">
+            <a (click)="openFile(conversation.logo, conversation.logoContentType)">
+              <img
+                [src]="'data:' + conversation.logoContentType + ';base64,' + conversation.logo"
+                style="max-width: 100%"
+                alt="conversation image"
+              />
+            </a>
+            {{ conversation.logoContentType }}, {{ byteSize(conversation.logo) }}
+          </div>
+        </dd>
+        <dt><span>Color</span></dt>
+        <dd>
+          <span>{{ conversation.color }}</span>
+        </dd>
+        <dt><span>User</span></dt>
+        <dd>
+          <span *ngFor="let user of conversation.users; let last = last"> {{ user.login }}{{ last ? '' : ', ' }} </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/conversation', conversation.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

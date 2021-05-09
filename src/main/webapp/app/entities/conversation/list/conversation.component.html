@@ -1,0 +1,93 @@
+<div>
+  <h2 id="page-heading" data-cy="ConversationHeading">
+    <span>Conversations</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="reset()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-conversation"
+        [routerLink]="['/conversation/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Conversation </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="conversations?.length === 0">
+    <span>No conversations found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="conversations && conversations.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="title"><span>Title</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="creationDate"><span>Creation Date</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="logo"><span>Logo</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="color"><span>Color</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let conversation of conversations; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/conversation', conversation.id, 'view']">{{ conversation.id }}</a>
+          </td>
+          <td>{{ conversation.title }}</td>
+          <td>{{ conversation.creationDate | formatMediumDatetime }}</td>
+          <td>
+            <a *ngIf="conversation.logo" (click)="openFile(conversation.logo, conversation.logoContentType)">
+              <img
+                [src]="'data:' + conversation.logoContentType + ';base64,' + conversation.logo"
+                style="max-height: 30px"
+                alt="conversation image"
+              />
+            </a>
+            <span *ngIf="conversation.logo">{{ conversation.logoContentType }}, {{ byteSize(conversation.logo) }}</span>
+          </td>
+          <td>{{ conversation.color }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/conversation', conversation.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/conversation', conversation.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(conversation)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

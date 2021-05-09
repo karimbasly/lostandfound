@@ -1,0 +1,77 @@
+{
+  "name": "Annonce",
+  "fields": [
+    {
+      "fieldName": "titre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength", "maxlength"],
+      "fieldValidateRulesMinlength": "3",
+      "fieldValidateRulesMaxlength": "255"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMinlength": "3",
+      "fieldValidateRulesMaxlength": "255"
+    },
+    {
+      "fieldName": "ville",
+      "fieldType": "Ville",
+      "fieldValues": "SOUSSE,MONASTIR,MAHDIA,TUNIS,SFAX"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "Type",
+      "fieldValues": "TROUVE,PERDU"
+    },
+    {
+      "fieldName": "etat",
+      "fieldType": "EtatAnnone",
+      "fieldValues": "PUBLISHED,HIDDEN,DELETED,ARCHIVED"
+    },
+    {
+      "fieldName": "dateAnnonce",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "commentaire",
+      "otherEntityRelationshipName": "annonce",
+      "relationshipName": "commentaire"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "image",
+      "otherEntityRelationshipName": "annonce",
+      "relationshipName": "image"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "categorie",
+      "otherEntityRelationshipName": "annonce",
+      "relationshipName": "categorie",
+      "otherEntityField": "title"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "annonce",
+      "relationshipName": "user",
+      "otherEntityField": "login"
+    }
+  ],
+  "entityTableName": "annonce",
+  "dto": "no",
+  "pagination": "infinite-scroll",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210506141631"
+}

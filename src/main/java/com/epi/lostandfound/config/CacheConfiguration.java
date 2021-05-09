@@ -48,6 +48,16 @@ public class CacheConfiguration {
             createCache(cm, com.epi.lostandfound.domain.User.class.getName());
             createCache(cm, com.epi.lostandfound.domain.Authority.class.getName());
             createCache(cm, com.epi.lostandfound.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.epi.lostandfound.domain.Annonce.class.getName());
+            createCache(cm, com.epi.lostandfound.domain.Annonce.class.getName() + ".commentaires");
+            createCache(cm, com.epi.lostandfound.domain.Annonce.class.getName() + ".images");
+            createCache(cm, com.epi.lostandfound.domain.Image.class.getName());
+            createCache(cm, com.epi.lostandfound.domain.Categorie.class.getName());
+            createCache(cm, com.epi.lostandfound.domain.Conversation.class.getName());
+            createCache(cm, com.epi.lostandfound.domain.Conversation.class.getName() + ".messages");
+            createCache(cm, com.epi.lostandfound.domain.Conversation.class.getName() + ".users");
+            createCache(cm, com.epi.lostandfound.domain.Message.class.getName());
+            createCache(cm, com.epi.lostandfound.domain.Commentaire.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

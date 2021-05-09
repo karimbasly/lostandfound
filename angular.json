@@ -95,6 +95,7 @@
   },
   "defaultProject": "lostandfound",
   "cli": {
+    "analytics": false,
     "packageManager": "npm"
   }
 }
