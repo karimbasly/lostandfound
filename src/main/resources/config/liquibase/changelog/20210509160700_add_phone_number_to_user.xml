@@ -12,7 +12,7 @@
             <column
                     name="phone_number"
                     type="varchar(8)" >
-                
+
             </column>
         </addColumn>
     </changeSet>
