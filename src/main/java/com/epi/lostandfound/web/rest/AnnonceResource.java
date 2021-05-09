@@ -6,6 +6,7 @@ import com.epi.lostandfound.domain.enumeration.Ville;
 import com.epi.lostandfound.repository.AnnonceRepository;
 import com.epi.lostandfound.security.SecurityUtils;
 import com.epi.lostandfound.service.AnnonceService;
+import com.epi.lostandfound.service.UserService;
 import com.epi.lostandfound.service.dto.AnnonceDTO;
 import com.epi.lostandfound.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -46,10 +47,13 @@ public class AnnonceResource {
 
     private final AnnonceService annonceService;
 
+    private final UserService userService;
+
     private final AnnonceRepository annonceRepository;
 
-    public AnnonceResource(AnnonceService annonceService, AnnonceRepository annonceRepository) {
+    public AnnonceResource(AnnonceService annonceService, UserService userService, AnnonceRepository annonceRepository) {
         this.annonceService = annonceService;
+        this.userService = userService;
         this.annonceRepository = annonceRepository;
     }
 
@@ -63,10 +67,12 @@ public class AnnonceResource {
     @PostMapping("/annonces")
     public ResponseEntity<Annonce> createAnnonce(@Valid @RequestBody AnnonceDTO annonce) throws URISyntaxException {
         log.debug("REST request to save Annonce : {}", annonce);
+        String userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new RuntimeException("user needed"));
         if (annonce.getId() != null) {
             throw new BadRequestAlertException("A new annonce cannot already have an ID", ENTITY_NAME, "idexists");
         }
         annonce.setDateAnnonce(ZonedDateTime.now());
+        annonce.setUser(userService.getUserWithAuthoritiesByLogin(userLogin).get());
         Annonce result = annonceService.save(annonce.toAnnonce());
         return ResponseEntity
             .created(new URI("/api/annonces/" + result.getId()))
