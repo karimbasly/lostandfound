@@ -12,8 +12,6 @@ import { IAnnonce, Annonce } from '../annonce.model';
 import { AnnonceService } from '../service/annonce.service';
 import { ICategorie } from 'app/entities/categorie/categorie.model';
 import { CategorieService } from 'app/entities/categorie/service/categorie.service';
-import { IUser } from 'app/entities/user/user.model';
-import { UserService } from 'app/entities/user/user.service';
 
 @Component({
   selector: 'jhi-annonce-update',
@@ -23,7 +21,6 @@ export class AnnonceUpdateComponent implements OnInit {
   isSaving = false;
 
   categoriesSharedCollection: ICategorie[] = [];
-  usersSharedCollection: IUser[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -34,13 +31,11 @@ export class AnnonceUpdateComponent implements OnInit {
     etat: [],
     dateAnnonce: [null, [Validators.required]],
     categorie: [],
-    user: [],
   });
 
   constructor(
     protected annonceService: AnnonceService,
     protected categorieService: CategorieService,
-    protected userService: UserService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
@@ -76,10 +71,6 @@ export class AnnonceUpdateComponent implements OnInit {
     return item.id!;
   }
 
-  trackUserById(index: number, item: IUser): number {
-    return item.id!;
-  }
-
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IAnnonce>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe(
       () => this.onSaveSuccess(),
@@ -109,14 +100,12 @@ export class AnnonceUpdateComponent implements OnInit {
       etat: annonce.etat,
       dateAnnonce: annonce.dateAnnonce ? annonce.dateAnnonce.format(DATE_TIME_FORMAT) : null,
       categorie: annonce.categorie,
-      user: annonce.user,
     });
 
     this.categoriesSharedCollection = this.categorieService.addCategorieToCollectionIfMissing(
       this.categoriesSharedCollection,
       annonce.categorie
     );
-    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing(this.usersSharedCollection, annonce.user);
   }
 
   protected loadRelationshipsOptions(): void {
@@ -129,12 +118,6 @@ export class AnnonceUpdateComponent implements OnInit {
         )
       )
       .subscribe((categories: ICategorie[]) => (this.categoriesSharedCollection = categories));
-
-    this.userService
-      .query()
-      .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
-      .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing(users, this.editForm.get('user')!.value)))
-      .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
   }
 
   protected createFromForm(): IAnnonce {
@@ -150,7 +133,6 @@ export class AnnonceUpdateComponent implements OnInit {
         ? dayjs(this.editForm.get(['dateAnnonce'])!.value, DATE_TIME_FORMAT)
         : undefined,
       categorie: this.editForm.get(['categorie'])!.value,
-      user: this.editForm.get(['user'])!.value,
     };
   }
 }
