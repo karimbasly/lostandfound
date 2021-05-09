@@ -96,6 +96,7 @@ public class AnnonceResource {
         @Valid @RequestBody Annonce annonce
     ) throws URISyntaxException {
         log.debug("REST request to update Annonce : {}, {}", id, annonce);
+        String userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new RuntimeException("user needed"));
         if (annonce.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -106,7 +107,7 @@ public class AnnonceResource {
         if (!annonceRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
-
+        annonce.setUser(userService.getUserWithAuthoritiesByLogin(userLogin).get());
         Annonce result = annonceService.save(annonce);
         return ResponseEntity
             .ok()

@@ -32,8 +32,7 @@ export class Annonce implements IAnnonce {
     public dateAnnonce?: dayjs.Dayjs,
     public commentaires?: ICommentaire[] | null,
     public images?: IImage[] | null,
-    public categorie?: ICategorie | null,
-    public user?: IUser | null
+    public categorie?: ICategorie | null
   ) {}
 }
 
