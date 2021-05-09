@@ -79,6 +79,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     private String resetKey;
 
+    @Size(max = 8, min = 8)
+    @Column(name = "phone_number", length = 8)
+    private String phoneNumber;
+
     @Column(name = "reset_date")
     private Instant resetDate = null;
 
@@ -194,6 +198,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
         return authorities;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
@@ -227,6 +239,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", activated='" + activated + '\'' +
             ", langKey='" + langKey + '\'' +
             ", activationKey='" + activationKey + '\'' +
+            ", phoneNumber='" + phoneNumber + '\'' +
             "}";
     }
 }
