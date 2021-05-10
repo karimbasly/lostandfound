@@ -107,6 +107,7 @@ public class AnnonceResource {
         if (!annonceRepository.existsById(id)) {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
+
         annonce.setUser(userService.getUserWithAuthoritiesByLogin(userLogin).get());
         Annonce result = annonceService.save(annonce);
         return ResponseEntity

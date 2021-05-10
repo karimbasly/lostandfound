@@ -34,8 +34,38 @@
               { "glob": "axios.min.js", "input": "./node_modules/axios/dist", "output": "swagger-ui" },
               { "glob": "**/*", "input": "src/main/webapp/swagger-ui/", "output": "swagger-ui" }
             ],
-            "styles": ["src/main/webapp/content/scss/vendor.scss", "src/main/webapp/content/scss/global.scss"],
-            "scripts": []
+            "styles": [
+              "src/main/webapp/content/scss/vendor.scss",
+              "src/main/webapp/content/scss/global.scss",
+              "src/main/webapp/content/css/bootstrap.css",
+              "src/main/webapp/content/vendors/linericon/style.css",
+              "src/main/webapp/content/css/font-awesome.min.css",
+              "src/main/webapp/content/css/themify-icons.css",
+              "src/main/webapp/content/vendors/owl-carousel/owl.carousel.min.css",
+              "src/main/webapp/content/vendors/lightbox/simpleLightbox.css",
+              "src/main/webapp/content/vendors/nice-select/css/nice-select.css",
+              "src/main/webapp/content/vendors/animate-css/animate.css",
+              "src/main/webapp/content/vendors/jquery-ui/jquery-ui.css",
+              "src/main/webapp/content/css/style.css",
+              "src/main/webapp/content/css/responsive.css"
+            ],
+            "scripts": [
+              "src/main/webapp/content/js/jquery-3.2.1.min.js",
+              "src/main/webapp/content/js/popper.js",
+              "src/main/webapp/content/js/bootstrap.min.js",
+              "src/main/webapp/content/js/stellar.js",
+              "src/main/webapp/content/vendors/lightbox/simpleLightbox.min.js",
+              "src/main/webapp/content/vendors/nice-select/js/jquery.nice-select.min.js",
+              "src/main/webapp/content/vendors/isotope/imagesloaded.pkgd.min.js",
+              "src/main/webapp/content/vendors/isotope/isotope-min.js",
+              "src/main/webapp/content/vendors/owl-carousel/owl.carousel.min.js",
+              "src/main/webapp/content/js/jquery.ajaxchimp.min.js",
+              "src/main/webapp/content/js/mail-script.js",
+              "src/main/webapp/content/vendors/jquery-ui/jquery-ui.js",
+              "src/main/webapp/content/vendors/counter-up/jquery.waypoints.min.js",
+              "src/main/webapp/content/vendors/counter-up/jquery.counterup.js",
+              "src/main/webapp/content/js/theme.js"
+            ]
           },
           "configurations": {
             "production": {
