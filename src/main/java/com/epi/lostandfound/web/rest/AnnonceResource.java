@@ -161,7 +161,7 @@ public class AnnonceResource {
     @GetMapping("/annonces")
     public ResponseEntity<List<Annonce>> getAllAnnonces(Pageable pageable) {
         log.debug("REST request to get a page of Annonces");
-        Page<Annonce> page = annonceRepository.findByUserIsCurrentUser(pageable);
+        Page<Annonce> page = annonceService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

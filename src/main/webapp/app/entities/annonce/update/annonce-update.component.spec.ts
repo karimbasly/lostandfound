@@ -80,7 +80,6 @@ describe('Component Tests', () => {
 
         expect(userService.query).toHaveBeenCalled();
         expect(userService.addUserToCollectionIfMissing).toHaveBeenCalledWith(userCollection, ...additionalUsers);
-        expect(comp.usersSharedCollection).toEqual(expectedCollection);
       });
 
       it('Should update editForm', () => {
@@ -95,7 +94,6 @@ describe('Component Tests', () => {
 
         expect(comp.editForm.value).toEqual(expect.objectContaining(annonce));
         expect(comp.categoriesSharedCollection).toContain(categorie);
-        expect(comp.usersSharedCollection).toContain(user);
       });
     });
 
@@ -168,14 +166,6 @@ describe('Component Tests', () => {
         it('Should return tracked Categorie primary key', () => {
           const entity = { id: 123 };
           const trackResult = comp.trackCategorieById(0, entity);
-          expect(trackResult).toEqual(entity.id);
-        });
-      });
-
-      describe('trackUserById', () => {
-        it('Should return tracked User primary key', () => {
-          const entity = { id: 123 };
-          const trackResult = comp.trackUserById(0, entity);
           expect(trackResult).toEqual(entity.id);
         });
       });

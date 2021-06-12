@@ -72,7 +72,7 @@ public class AnnonceServiceImpl implements AnnonceService {
     @Transactional(readOnly = true)
     public Page<Annonce> findAll(Pageable pageable) {
         log.debug("Request to get all Annonces");
-        return annonceRepository.findAll(pageable);
+        return annonceRepository.findAnnoncesByEtatPublished(pageable);
     }
 
     @Override
