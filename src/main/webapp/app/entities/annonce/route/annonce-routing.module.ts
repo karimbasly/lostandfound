@@ -9,7 +9,7 @@ import { AnnonceRoutingResolveService } from './annonce-routing-resolve.service'
 
 const annonceRoute: Routes = [
   {
-    path: '',
+    path: 'list',
     component: AnnonceComponent,
     canActivate: [UserRouteAccessService],
   },

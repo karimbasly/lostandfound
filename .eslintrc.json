@@ -37,6 +37,7 @@
       }
     ],
     "@angular-eslint/relative-url-prefix": "error",
+    "@angular-eslint/no-empty-lifecycle-method": "off",
     "@typescript-eslint/ban-types": [
       "error",
       {

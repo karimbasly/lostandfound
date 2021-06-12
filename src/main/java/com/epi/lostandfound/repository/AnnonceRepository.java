@@ -1,6 +1,7 @@
 package com.epi.lostandfound.repository;
 
 import com.epi.lostandfound.domain.Annonce;
+import com.epi.lostandfound.domain.enumeration.EtatAnnone;
 import com.epi.lostandfound.domain.enumeration.Ville;
 import java.util.List;
 import org.springframework.data.domain.Page;
@@ -19,4 +20,7 @@ public interface AnnonceRepository extends JpaRepository<Annonce, Long> {
 
     List<Annonce> findAnnoncesByCategorieId(Long idCat);
     List<Annonce> findAnnoncesByVille(Ville ville);
+
+    @Query("select annonce from Annonce annonce where annonce.etat = 'PUBLISHED'")
+    Page<Annonce> findAnnoncesByEtatPublished(Pageable pageable);
 }
