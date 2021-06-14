@@ -1,11 +1,13 @@
 package com.epi.lostandfound.web.rest;
 
 import com.epi.lostandfound.domain.Annonce;
+import com.epi.lostandfound.domain.Image;
 import com.epi.lostandfound.domain.enumeration.EtatAnnone;
 import com.epi.lostandfound.domain.enumeration.Ville;
 import com.epi.lostandfound.repository.AnnonceRepository;
 import com.epi.lostandfound.security.SecurityUtils;
 import com.epi.lostandfound.service.AnnonceService;
+import com.epi.lostandfound.service.ImageService;
 import com.epi.lostandfound.service.UserService;
 import com.epi.lostandfound.service.dto.AnnonceDTO;
 import com.epi.lostandfound.web.rest.errors.BadRequestAlertException;
@@ -51,10 +53,18 @@ public class AnnonceResource {
 
     private final AnnonceRepository annonceRepository;
 
-    public AnnonceResource(AnnonceService annonceService, UserService userService, AnnonceRepository annonceRepository) {
+    private final ImageService imageService;
+
+    public AnnonceResource(
+        AnnonceService annonceService,
+        UserService userService,
+        AnnonceRepository annonceRepository,
+        ImageService imageService
+    ) {
         this.annonceService = annonceService;
         this.userService = userService;
         this.annonceRepository = annonceRepository;
+        this.imageService = imageService;
     }
 
     /**
@@ -74,6 +84,10 @@ public class AnnonceResource {
         annonce.setDateAnnonce(ZonedDateTime.now());
         annonce.setUser(userService.getUserWithAuthoritiesByLogin(userLogin).get());
         Annonce result = annonceService.save(annonce.toAnnonce());
+        for (Image i : annonce.getImages()) {
+            i.setAnnonce(result);
+            imageService.save(i);
+        }
         return ResponseEntity
             .created(new URI("/api/annonces/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))

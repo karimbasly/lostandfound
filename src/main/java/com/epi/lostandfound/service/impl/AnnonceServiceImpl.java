@@ -4,7 +4,7 @@ import com.epi.lostandfound.domain.Annonce;
 import com.epi.lostandfound.domain.enumeration.Ville;
 import com.epi.lostandfound.repository.AnnonceRepository;
 import com.epi.lostandfound.service.AnnonceService;
-import java.time.ZonedDateTime;
+import com.epi.lostandfound.service.ImageService;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -24,9 +24,11 @@ public class AnnonceServiceImpl implements AnnonceService {
     private final Logger log = LoggerFactory.getLogger(AnnonceServiceImpl.class);
 
     private final AnnonceRepository annonceRepository;
+    private final ImageService imageService;
 
-    public AnnonceServiceImpl(AnnonceRepository annonceRepository) {
+    public AnnonceServiceImpl(AnnonceRepository annonceRepository, ImageService imageService) {
         this.annonceRepository = annonceRepository;
+        this.imageService = imageService;
     }
 
     @Override
