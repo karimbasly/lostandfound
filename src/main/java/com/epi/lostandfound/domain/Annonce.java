@@ -53,6 +53,13 @@ public class Annonce implements Serializable {
     @Column(name = "date_annonce", nullable = false)
     private ZonedDateTime dateAnnonce;
 
+    @Lob
+    @Column(name = "logo", nullable = false)
+    private byte[] logo;
+
+    @Column(name = "logo_content_type", nullable = false)
+    private String logoContentType;
+
     @OneToMany(mappedBy = "annonce")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "user", "annonce" }, allowSetters = true)
@@ -155,6 +162,32 @@ public class Annonce implements Serializable {
     public Annonce dateAnnonce(ZonedDateTime dateAnnonce) {
         this.dateAnnonce = dateAnnonce;
         return this;
+    }
+
+    public byte[] getLogo() {
+        return logo;
+    }
+
+    public Annonce logo(byte[] logo) {
+        this.logo = logo;
+        return this;
+    }
+
+    public void setLogo(byte[] logo) {
+        this.logo = logo;
+    }
+
+    public Annonce logoContentType(String logoContentType) {
+        this.logoContentType = logoContentType;
+        return this;
+    }
+
+    public String getLogoContentType() {
+        return logoContentType;
+    }
+
+    public void setLogoContentType(String logoContentType) {
+        this.logoContentType = logoContentType;
     }
 
     public void setDateAnnonce(ZonedDateTime dateAnnonce) {

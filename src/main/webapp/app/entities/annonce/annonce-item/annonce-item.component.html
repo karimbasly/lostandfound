@@ -1,0 +1,30 @@
+<div class="single-product">
+  <div class="product-img">
+    <div *ngIf="annonce.logo">
+      <a (click)="openFile(annonce.logo, annonce.logoContentType)">
+        <img [src]="'data:' + annonce.logoContentType + ';base64,' + annonce.logo" style="max-width: 100%" alt="categorie image" />
+      </a>
+    </div>
+    <div class="p_icon">
+      <a [routerLink]="['/annonce', annonce.id, 'view']">
+        <i class="ti-eye"></i>
+      </a>
+      <a href="#">
+        <i class="ti-heart"></i>
+      </a>
+      <a href="#">
+        <i class="ti-shopping-cart"></i>
+      </a>
+    </div>
+  </div>
+  <div class="product-btm">
+    <a href="#" class="d-block">
+      <h4>
+        titre : <strong>{{ annonce.titre }}</strong>
+      </h4>
+    </a>
+    <div class="mt-3">
+      <span class="mr-4">description : {{ annonce.description }}</span>
+    </div>
+  </div>
+</div>

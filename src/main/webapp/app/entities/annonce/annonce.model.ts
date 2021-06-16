@@ -17,6 +17,8 @@ export interface IAnnonce {
   dateAnnonce?: dayjs.Dayjs;
   commentaires?: ICommentaire[] | null;
   images?: IImage[] | null;
+  logoContentType?: string;
+  logo?: string;
   categorie?: ICategorie | null;
   user?: IUser | null;
 }
@@ -32,6 +34,8 @@ export class Annonce implements IAnnonce {
     public dateAnnonce?: dayjs.Dayjs,
     public commentaires?: ICommentaire[] | null,
     public images?: IImage[] | null,
+    public logoContentType?: string,
+    public logo?: string,
     public categorie?: ICategorie | null
   ) {}
 }

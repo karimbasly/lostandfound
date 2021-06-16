@@ -3,6 +3,8 @@
     <span class="logo-img"></span>
     <span class="navbar-title">Lostandfound</span>
     <span class="navbar-version">{{ version }}</span>
+    <!--<input type="search"  (ngModelChange) = "(key.value)" #key="ngModel" ngModel
+           name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search employees..." />-->
   </a>
   <a
     class="navbar-toggler d-lg-none"
@@ -45,7 +47,7 @@
           <li>
             <a
               class="dropdown-item"
-              routerLink="annonce"
+              routerLink="annonce/list"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="collapseNavbar()"

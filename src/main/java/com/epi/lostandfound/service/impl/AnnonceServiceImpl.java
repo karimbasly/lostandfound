@@ -61,6 +61,12 @@ public class AnnonceServiceImpl implements AnnonceService {
                     if (annonce.getDateAnnonce() != null) {
                         existingAnnonce.setDateAnnonce(annonce.getDateAnnonce());
                     }
+                    if (annonce.getLogo() != null) {
+                        existingAnnonce.setLogo(annonce.getLogo());
+                    }
+                    if (annonce.getLogoContentType() != null) {
+                        existingAnnonce.setLogoContentType(annonce.getLogoContentType());
+                    }
 
                     return existingAnnonce;
                 }
@@ -72,7 +78,7 @@ public class AnnonceServiceImpl implements AnnonceService {
     @Transactional(readOnly = true)
     public Page<Annonce> findAll(Pageable pageable) {
         log.debug("Request to get all Annonces");
-        return annonceRepository.findAll(pageable);
+        return annonceRepository.findAnnoncesByEtatPublished(pageable);
     }
 
     @Override
