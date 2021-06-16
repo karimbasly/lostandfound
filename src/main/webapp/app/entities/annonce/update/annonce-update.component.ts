@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -12,6 +12,9 @@ import { IAnnonce, Annonce } from '../annonce.model';
 import { AnnonceService } from '../service/annonce.service';
 import { ICategorie } from 'app/entities/categorie/categorie.model';
 import { CategorieService } from 'app/entities/categorie/service/categorie.service';
+import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
+import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
+import { AlertError } from 'app/shared/alert/alert-error.model';
 
 @Component({
   selector: 'jhi-annonce-update',
@@ -30,12 +33,18 @@ export class AnnonceUpdateComponent implements OnInit {
     type: [],
     etat: [],
     dateAnnonce: [null, [Validators.required]],
+    logo: [],
+    logoContentType: [],
+
     categorie: [],
   });
 
   constructor(
+    protected dataUtils: DataUtils,
+    protected eventManager: EventManager,
     protected annonceService: AnnonceService,
     protected categorieService: CategorieService,
+    protected elementRef: ElementRef,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
@@ -53,8 +62,31 @@ export class AnnonceUpdateComponent implements OnInit {
     });
   }
 
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
   previousState(): void {
     window.history.back();
+  }
+
+  setFileData(event: Event, field: string, isImage: boolean): void {
+    this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe({
+      error: (err: FileLoadError) =>
+        this.eventManager.broadcast(
+          new EventWithContent<AlertError>('lostandfoundApp.error', { message: err.message })
+        ),
+    });
+  }
+
+  clearInputImage(field: string, fieldContentType: string, idInput: string): void {
+    this.editForm.patchValue({
+      [field]: null,
+      [fieldContentType]: null,
+    });
+    if (idInput && this.elementRef.nativeElement.querySelector('#' + idInput)) {
+      this.elementRef.nativeElement.querySelector('#' + idInput).value = null;
+    }
   }
 
   save(): void {
@@ -98,6 +130,8 @@ export class AnnonceUpdateComponent implements OnInit {
       ville: annonce.ville,
       type: annonce.type,
       etat: annonce.etat,
+      logo: annonce.logo,
+      logoContentType: annonce.logoContentType,
       dateAnnonce: annonce.dateAnnonce ? annonce.dateAnnonce.format(DATE_TIME_FORMAT) : null,
       categorie: annonce.categorie,
     });
@@ -132,6 +166,9 @@ export class AnnonceUpdateComponent implements OnInit {
       dateAnnonce: this.editForm.get(['dateAnnonce'])!.value
         ? dayjs(this.editForm.get(['dateAnnonce'])!.value, DATE_TIME_FORMAT)
         : undefined,
+      logoContentType: this.editForm.get(['logoContentType'])!.value,
+      logo: this.editForm.get(['logo'])!.value,
+
       categorie: this.editForm.get(['categorie'])!.value,
     };
   }

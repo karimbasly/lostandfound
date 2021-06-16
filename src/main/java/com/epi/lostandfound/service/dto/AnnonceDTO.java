@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Lob;
 import javax.validation.constraints.*;
 
 public class AnnonceDTO implements Serializable {
@@ -31,6 +33,11 @@ public class AnnonceDTO implements Serializable {
     private EtatAnnone etat;
 
     private ZonedDateTime dateAnnonce;
+
+    @Lob
+    private byte[] logo;
+
+    private String logoContentType;
 
     @JsonIgnoreProperties(value = { "user", "annonce" }, allowSetters = true)
     private Set<Commentaire> commentaires = new HashSet<>();
@@ -57,6 +64,8 @@ public class AnnonceDTO implements Serializable {
         annonce.setDateAnnonce(this.dateAnnonce);
         annonce.setImages(this.images);
         annonce.setUser(this.user);
+        annonce.setLogoContentType(this.logoContentType);
+        annonce.setLogo(this.logo);
         return annonce;
     }
 
@@ -146,5 +155,21 @@ public class AnnonceDTO implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public byte[] getLogo() {
+        return logo;
+    }
+
+    public void setLogo(byte[] logo) {
+        this.logo = logo;
+    }
+
+    public String getLogoContentType() {
+        return logoContentType;
+    }
+
+    public void setLogoContentType(String logoContentType) {
+        this.logoContentType = logoContentType;
     }
 }

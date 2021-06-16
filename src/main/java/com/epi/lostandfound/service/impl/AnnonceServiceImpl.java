@@ -61,6 +61,12 @@ public class AnnonceServiceImpl implements AnnonceService {
                     if (annonce.getDateAnnonce() != null) {
                         existingAnnonce.setDateAnnonce(annonce.getDateAnnonce());
                     }
+                    if (annonce.getLogo() != null) {
+                        existingAnnonce.setLogo(annonce.getLogo());
+                    }
+                    if (annonce.getLogoContentType() != null) {
+                        existingAnnonce.setLogoContentType(annonce.getLogoContentType());
+                    }
 
                     return existingAnnonce;
                 }

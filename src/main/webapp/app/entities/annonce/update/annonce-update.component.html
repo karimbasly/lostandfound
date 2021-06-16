@@ -110,6 +110,33 @@
             </option>
           </select>
         </div>
+        <div class="form-group">
+          <label class="form-control-label" for="field_logo">Logo</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('logoContentType')!.value + ';base64,' + editForm.get('logo')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('logo')!.value"
+              alt="annonce image"
+            />
+            <div *ngIf="editForm.get('logo')!.value" class="form-text text-danger clearfix">
+              <span class="pull-left">{{ editForm.get('logoContentType')!.value }}, {{ byteSize(editForm.get('logo')!.value) }}</span>
+              <button
+                type="button"
+                (click)="clearInputImage('logo', 'logoContentType', 'file_logo')"
+                class="btn btn-secondary btn-xs pull-right"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input type="file" id="file_logo" data-cy="logo" (change)="setFileData($event, 'logo', true)" accept="image/*" />
+          </div>
+          <input type="hidden" class="form-control" name="logo" id="field_logo" data-cy="logo" formControlName="logo" />
+          <input type="hidden" class="form-control" name="logoContentType" id="field_logoContentType" formControlName="logoContentType" />
+          <div *ngIf="editForm.get('logo')!.invalid && (editForm.get('logo')!.dirty || editForm.get('logo')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('logo')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
       </div>
 
       <div>

@@ -1,6 +1,10 @@
 <div class="single-product">
   <div class="product-img">
-    <img class="card-img" src="./content/images/rocky.jpg" alt="" />
+    <div *ngIf="annonce.logo">
+      <a (click)="openFile(annonce.logo, annonce.logoContentType)">
+        <img [src]="'data:' + annonce.logoContentType + ';base64,' + annonce.logo" style="max-width: 100%" alt="categorie image" />
+      </a>
+    </div>
     <div class="p_icon">
       <a [routerLink]="['/annonce', annonce.id, 'view']">
         <i class="ti-eye"></i>
