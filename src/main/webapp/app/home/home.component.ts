@@ -7,7 +7,7 @@ import { Account } from 'app/core/auth/account.model';
 import { AnnonceService } from 'app/entities/annonce/service/annonce.service';
 import { ITEMS_PER_PAGE } from 'app/config/pagination.constants';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { IAnnonce } from 'app/entities/annonce/annonce.model';
+import { Annonce, IAnnonce } from 'app/entities/annonce/annonce.model';
 
 import { ParseLinks } from 'app/core/util/parse-links.service';
 
@@ -109,6 +109,24 @@ export class HomeComponent implements OnInit, OnDestroy {
       for (const d of data) {
         this.annonces.push(d);
       }
+    }
+  }
+
+  public searchAnnonces(key: string): void {
+    const results: Annonce[] = [];
+    for (const Annonce of this.annonces) {
+      if (
+        Annonce.titre?.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
+        Annonce.description?.toLowerCase().indexOf(key.toLowerCase()) !== -1 ||
+        Annonce.ville?.toLowerCase().indexOf(key.toLowerCase()) !== -1
+      ) {
+        results.push(Annonce);
+      }
+    }
+    this.annonces = results;
+    if (results.length === 0 || !key) {
+      this.annonces = [];
+      this.loadAll();
     }
   }
 }
