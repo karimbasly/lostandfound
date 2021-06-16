@@ -28,6 +28,8 @@
     <include file="config/liquibase/changelog/20210506141635_added_entity_constraints_Message.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210506141636_added_entity_constraints_Commentaire.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210509160700_add_phone_number_to_user.xml" relativeToChangelogFile="false" />
+    <include file="config/liquibase/changelog/20210615225143_add_logo_to_annonce.xml" relativeToChangelogFile="false" />
+    <include file="config/liquibase/changelog/20210615225145_add_logo_content_to_annonce.xml" relativeToChangelogFile="false" />
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>
