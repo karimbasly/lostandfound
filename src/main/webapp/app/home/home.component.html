@@ -13,6 +13,16 @@
         <div class="col-lg-9">
           <div class="product_top_bar">
             <div class="left_dorp">
+              <input
+                type="search"
+                (ngModelChange)="searchAnnonces(key.value)"
+                #key="ngModel"
+                ngModel
+                name="key"
+                id="searchName"
+                class="form-control mr-sm-2"
+                placeholder="Search employees..."
+              />
               <select class="sorting">
                 <option value="1">Default sorting</option>
                 <option value="2">Default sorting 01</option>
